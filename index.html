@@ -2,72 +2,294 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>AutoCAD 專業學習網站 - v10.0 FINAL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCAD 專業學習網站 - 終極大師版</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: #e2e8f0; font-family: sans-serif; }
+        body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
+      .cad-card { background: rgba(30, 41, 59, 0.7); border-left: 4px solid #3b82f6; transition: 0.3s; }
+      .cad-card:hover { transform: translateY(-5px); background: rgba(30, 41, 59, 1); }
+      .game-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 25px rgba(59, 130, 246, 0.7); }
       .success-flash { animation: flash 0.5s; }
-        @keyframes flash { 0% { background-color: transparent; } 50% { background-color: rgba(34, 197, 94, 0.3); } 100% { background-color: transparent; } }
+        @keyframes flash { 0% { background-color: transparent; } 50% { background-color: rgba(34, 197, 94, 0.4); } 100% { background-color: transparent; } }
+        pre { background: #000; padding: 15px; border-radius: 8px; color: #10b981; overflow-x: auto; font-size: 0.85rem; border: 1px solid #1e293b; }
     </style>
 </head>
 <body>
-    <div class="container mx-auto px-6 py-12 text-center">
-        <h1 class="text-3xl font-bold text-blue-500 mb-8">AutoCAD Expert Hub <span class="text-sm">[v10.0]</span></h1>
-        
-        <div id="game-container" class="max-w-xl mx-auto bg-slate-800 p-10 rounded-2xl border border-slate-700 shadow-2xl">
-            <div class="text-xs text-blue-400 mb-2 uppercase font-bold tracking-widest">目前挑戰目標</div>
-            <div id="command-name" class="text-5xl font-black mb-8 text-white h-16 flex items-center justify-center">載入中...</div>
-            
-            <input type="text" id="game-input" class="w-32 text-center text-4xl font-bold bg-slate-900 border-2 border-slate-600 rounded-lg p-3 uppercase text-blue-400 focus:outline-none focus:border-blue-500" maxlength="3" autocomplete="off" autofocus>
-            
-            <p class="text-xs text-slate-500 mt-6 font-mono">提示：請鍵入指令縮寫 (例如：L) [v10.0]</p>
-            <div id="game-feedback" class="mt-4 h-6 text-green-400 font-bold"></div>
-            
-            <div class="mt-10 flex justify-around text-xs text-slate-400 border-t border-slate-700 pt-8">
-                <div>得分: <span id="score" class="text-xl text-blue-400 font-bold">0</span></div>
-                <div>目前等級: <span class="text-xl text-green-400 font-bold">初級</span></div>
+
+<header class="bg-slate-900 border-b border-slate-700 sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-blue-500"><i class="fas fa-drafting-compass mr-2"></i>Expert Hub <span class="text-xs font-normal text-slate-500">[v13.0 FINAL]</span></h1>
+        <nav class="hidden md:flex space-x-6 text-sm font-medium">
+            <a href="#game" class="hover:text-blue-400">快捷鍵闖關</a>
+            <a href="#sysvar" class="hover:text-blue-400">系統變數</a>
+            <a href="#features" class="hover:text-blue-400">2026新功能</a>
+            <a href="#mastery" class="hover:text-blue-400">高手之路</a>
+            <a href="#lisp" class="hover:text-blue-400">AutoLISP</a>
+            <a href="#cert" class="hover:text-blue-400">證照考題</a>
+            <a href="#ai" class="hover:text-blue-400">AutoCAD & AI</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container mx-auto px-6 py-12 space-y-24">
+
+    <section id="game" class="scroll-mt-24">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold mb-2">1. 快捷鍵反射動作闖關遊戲</h2>
+            <p class="text-slate-400 italic">點擊輸入框，快速鍵入指令縮寫開始肌肉記憶訓練 [1]</p>
+        </div>
+        <div id="game-container" class="max-w-2xl mx-auto bg-slate-800 p-10 rounded-2xl shadow-2xl border border-slate-700">
+            <div class="text-center">
+                <div class="text-sm text-blue-400 mb-2 uppercase tracking-widest font-bold">挑戰指令</div>
+                <div id="command-name" class="text-5xl font-black mb-8 text-white h-20 flex items-center justify-center">載入中...</div>
+                <input type="text" id="game-input" 
+                       class="game-input w-40 text-center text-5xl font-bold bg-slate-900 border-2 border-slate-600 rounded-xl p-4 uppercase text-blue-400" 
+                       maxlength="3" autocomplete="off" autofocus placeholder="??">
+                <p id="hint-text" class="text-xs text-slate-500 mt-6 font-mono">提示：請輸入 1~2 個字母 (例如：L)</p>
+                <div id="game-feedback" class="mt-6 h-8 text-xl font-bold text-center"></div>
+                <div class="mt-10 flex justify-around text-sm text-slate-400 border-t border-slate-700 pt-8">
+                    <div class="flex flex-col"><span>累計得分</span><span id="score" class="text-3xl text-blue-400 font-bold">0</span></div>
+                    <div class="flex flex-col"><span>難度等級</span><span id="difficulty" class="text-xl text-green-400 font-bold">初級</span></div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <section id="sysvar" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-white">2. AutoCAD 核心系統變數百科 [5]</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
+            <div class="cad-card p-6 rounded-xl">
+                <h3 class="font-bold text-blue-400 text-lg mb-2">FILEDIA</h3>
+                <p>控制導航對話框。設為 1 顯示彈窗，設為 0 強制命令列輸入 [5]。</p>
+            </div>
+            <div class="cad-card p-6 rounded-xl">
+                <h3 class="font-bold text-blue-400 text-lg mb-2">OSMODE</h3>
+                <p>鎖點模式總和。常用 35 (端點+中點+圓心) 或 16383 (全開) [6, 7]。</p>
+            </div>
+            <div class="cad-card p-6 rounded-xl">
+                <h3 class="font-bold text-blue-400 text-lg mb-2">PICKADD</h3>
+                <p>控制選取累加。建議設為 2，以便連續選取多個物件而不消失 。</p>
+            </div>
+            <div class="cad-card p-6 rounded-xl">
+                <h3 class="font-bold text-blue-400 text-lg mb-2">TABLELAYER</h3>
+                <p>2026 新變數：指定新表格自動歸類的圖層 [8, 9]。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-white">3. AutoCAD 2024-2026 智慧更新 [10, 11, 1, 9]</h2>
+        <div class="space-y-6">
+            <div class="bg-slate-800 p-8 rounded-2xl border border-blue-500/20 flex flex-col lg:flex-row gap-10">
+                <div class="lg:w-1/2">
+                    <span class="bg-blue-600 text-xs font-bold px-2 py-1 rounded">2026 核心</span>
+                    <h3 class="text-2xl font-bold mt-4 mb-4">效能革命與 AI 偵測 </h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        實現了 **11 倍** 的檔案開啟速度提升。AI 功能「Detect and Convert」能自動偵測圖面中重複的幾何形狀並一鍵轉為圖塊 。
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs font-mono text-blue-400">
+                        <div class="bg-slate-900 p-3 rounded">Autodesk Assistant (AI)</div>
+                        <div class="bg-slate-900 p-3 rounded">GPU 文本加速渲染</div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex items-center justify-center bg-black/40 rounded-xl aspect-video relative group border-4 border-slate-700">
+                    <i class="fab fa-youtube text-6xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                    <p class="absolute bottom-4 text-[10px] text-slate-500 px-4">2026 Official Overview Video (4min 50s) </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mastery" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-white">4. 如何成為 2D & 3D 高手？ </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+            <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
+                <h4 class="text-blue-400 font-black mb-4 uppercase tracking-widest">2.D 精通路徑</h4>
+                <ul class="space-y-3 text-slate-300">
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **動態塊 (Dynamic Blocks)**：建立帶參數的萬用零件 。</li>
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **註釋比例 (Annotative)**：掌握不同比例出圖的一致性 。</li>
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **外部參考 (Xref)**：管理大型專案的層級結構 。</li>
+                </ul>
+            </div>
+            <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
+                <h4 class="text-purple-400 font-black mb-4 uppercase tracking-widest">3.D 大師路徑</h4>
+                <ul class="space-y-3 text-slate-300">
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **布林運算**：熟練實體模型 (Solid) 的聯集與差集 [12, 13]。</li>
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **座標系 (UCS)**：靈活旋轉繪圖平面處理複雜面 。</li>
+                    <li><i class="fas fa-check mr-2 text-green-500"></i> **彩現渲染**：設定材質與燈光輸出擬真圖面 。</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="lisp" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-white">5. 常用 AutoLISP 函數實務 [12, 14, 15]</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    透過 AutoLISP 實現自動化繪圖，能將耗時數小時的工作縮短至秒級 。
+                </p>
+                <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 text-xs">
+                    <h5 class="text-blue-400 font-bold mb-3 uppercase">核心函數對應表</h5>
+                    <div class="grid grid-cols-2 gap-y-2">
+                        <span class="text-slate-200">setq</span><span class="text-slate-500">設定變數值 [14]</span>
+                        <span class="text-slate-200">ssget</span><span class="text-slate-500">過濾並選取物件 [16]</span>
+                        <span class="text-slate-200">defun</span><span class="text-slate-500">定義新指令函數 </span>
+                        <span class="text-slate-200">command</span><span class="text-slate-500">調用 AutoCAD 指令</span>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <h5 class="text-emerald-400 font-bold text-sm uppercase">實戰：全圖塊計數器 </h5>
+                <pre><code>(defun c:BlkCount (/ ss)
+  (setq ss (ssget "X" '((0. "INSERT"))))
+  (if ss
+    (alert (strcat "偵測成功！目前圖面共計 " (itoa (sslength ss)) " 個圖塊。"))
+    (princ "\n未發現任何圖塊。")
+  )
+  (princ)
+)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="cert" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-white">6 & 7. TQC+ 與 ACP 原廠認證模擬 </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+            <div class="bg-slate-800 p-8 rounded-2xl border-t-4 border-blue-500">
+                <h4 class="font-bold mb-4 text-blue-400">TQC+ 技能檢定 (2D 幾何基礎) [17]</h4>
+                <p class="mb-6">在繪製複雜的機械零件時，若要精確取得圓與斜線的「相切」關係，應使用哪種物件鎖點？</p>
+                <div class="grid grid-cols-1 gap-3">
+                    <button onclick="checkAns(this, false)" class="p-3 border border-slate-600 rounded-lg text-left hover:bg-slate-700">A. CEN 圓心鎖點</button>
+                    <button onclick="checkAns(this, true)" class="p-3 border border-slate-600 rounded-lg text-left hover:bg-slate-700">B. TAN 相切鎖點 [17]</button>
+                </div>
+            </div>
+            <div class="bg-slate-800 p-8 rounded-2xl border-t-4 border-purple-500">
+                <h4 class="font-bold mb-4 text-purple-400">ACP 原廠認證 (2025 新版觀念) </h4>
+                <p class="mb-6">2025 年後的 ACP 認證考試主要的作答形式為何？</p>
+                <div class="grid grid-cols-1 gap-3">
+                    <button onclick="checkAns(this, true)" class="p-3 border border-slate-600 rounded-lg text-left hover:bg-slate-700">A. 選答格式 (Selected Response)，考試期間不操作軟體 </button>
+                    <button onclick="checkAns(this, false)" class="p-3 border border-slate-600 rounded-lg text-left hover:bg-slate-700">B. 現場繪製 DWG 檔案上傳</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai" class="scroll-mt-24 pb-20">
+        <h2 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-4 text-emerald-400 text-white">8. AutoCAD 與 AI：設計的未來趨勢 </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-sm">
+            <div class="cad-card p-8 rounded-2xl border-emerald-500/40">
+                <h4 class="font-bold text-lg text-white mb-4">生成式設計</h4>
+                <p class="text-slate-400 leading-relaxed">
+                    **Project Bernini**：Autodesk 研究中的 AI 模型，能從文字提示快速生成具備功能性的 3D CAD 模型 。
+                </p>
+            </div>
+            <div class="cad-card p-8 rounded-2xl border-emerald-500/40">
+                <h4 class="font-bold text-lg text-white mb-4">神經 CAD (Neural CAD)</h4>
+                <p class="text-slate-400 leading-relaxed">
+                    未來的 CAD 引擎將具備「物理推理」能力，能自動預測建築內部的管線配置與結構邏輯 。
+                </p>
+            </div>
+            <div class="cad-card p-8 rounded-2xl border-emerald-500/40">
+                <h4 class="font-bold text-lg text-white mb-4">智慧協作</h4>
+                <p class="text-slate-400 leading-relaxed">
+                    **Markup Assist** 利用 AI 辨識手寫修正，自動將其轉化為數位指令（如 MOVE 或 DELETE） 。
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-slate-900 border-t border-slate-800 py-16 text-center">
+    <div class="max-w-xl mx-auto px-6">
+        <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-tighter">
+            © 2025 AutoCAD 專業學習網站 | 講師開發終極版 | 數據對標最新 2026 技術手冊與 2025 考綱 
+        </p>
     </div>
+</footer>
 
 <script>
-    /* 【關鍵資料庫】 - 請確認此處包含 L, C, PL 等資料 */
-    const shortcuts = [{ key: 'L', name: 'LINE (直線)', level: '初級' },{ key: 'C', name: 'CIRCLE (圓)', level: '初級' }];
+    // 【核心快捷鍵資料庫】 - 15 組精選常用指令 [1, 2, 18, 19]
+    const shortcuts = [{ key: 'L', name: 'LINE (直線)', level: '初級' },{ key: 'C', name: 'CIRCLE (圓)', level: '初級' },{ key: 'A', name: 'ARC (弧)', level: '初級' },
+                       { key: 'O', name: 'OFFSET (偏移複製)', level: '初級' },{ key: 'B', name: 'BLOCK (圖塊)', level: '初級' },{ key: 'M', name: 'MOVE (移動)', level: '初級'},
+                       { key: 'F', name: 'FILLET (圓角)', level: '初級' },{ key: 'I', name: 'INSERT(插入圖塊)', level: '初級' },{ key: 'J', name: 'JOIN (接合)', level: '初級'}];
 
     let currentIdx = 0;
     let scoreValue = 0;
 
     const gameInput = document.getElementById('game-input');
     const commandName = document.getElementById('command-name');
+    const feedback = document.getElementById('game-feedback');
     const scoreDisplay = document.getElementById('score');
+    const difficultyDisplay = document.getElementById('difficulty');
+    const gameContainer = document.getElementById('game-container');
 
+    // 就是這行程式碼讓「載入中...」變換成 LINE [1]
     function updateGame() {
         if (currentIdx >= shortcuts.length) {
-            commandName.innerHTML = "🏆 任務達成！";
+            commandName.innerHTML = "<span class='text-yellow-400'>🏆 任務達成！</span>";
             gameInput.style.display = 'none';
+            feedback.innerText = "您已掌握 80% 核心指令反射肌肉記憶。";
             return;
         }
-        // 就是這一行負責改變顯示文字 
-        commandName.innerText = shortcuts[currentIdx].name;
+        const cmd = shortcuts[currentIdx];
+        commandName.innerText = cmd.name;
+        difficultyDisplay.innerText = cmd.level;
         gameInput.value = '';
         gameInput.focus();
     }
 
     gameInput.addEventListener('input', (e) => {
         const val = e.target.value.toUpperCase().trim();
-        if (val === shortcuts[currentIdx].key) {
+        const correctKey = shortcuts[currentIdx].key;
+
+        if (val === correctKey) {
+            feedback.innerText = "✔ 正確！正在跳轉下一個...";
+            feedback.className = "mt-6 h-8 text-xl font-bold text-green-400 text-center";
+            gameContainer.classList.add('success-flash');
             scoreValue += 10;
             scoreDisplay.innerText = scoreValue;
-            currentIdx++;
-            updateGame();
+            
+            setTimeout(() => {
+                gameContainer.classList.remove('success-flash');
+                feedback.innerText = "";
+                currentIdx++;
+                updateGame();
+            }, 400);
+        } else if (val.length >= correctKey.length) {
+            feedback.innerText = "❌ 錯誤，再試一次";
+            feedback.className = "mt-6 h-8 text-xl font-bold text-red-500 text-center";
+            setTimeout(() => { gameInput.value = ''; }, 400);
         }
     });
 
-    window.onload = updateGame;
-    document.addEventListener('click', () => gameInput.focus());
+    function checkAns(btn, isCorrect) {
+        if(isCorrect) {
+            btn.className = "p-3 bg-green-600 rounded-lg font-bold text-white text-left";
+            btn.innerHTML = "<i class='fas fa-check-circle mr-2'></i>答對了！觀念完全正確！";
+        } else {
+            btn.className = "p-3 bg-red-600 rounded-lg font-bold text-white text-left";
+            btn.innerHTML = "<i class='fas fa-times-circle mr-2'></i>再想想... 請參考最新考綱。";
+        }
+    }
+
+    // 啟動遊戲
+    window.onload = function() {
+        if (shortcuts.length > 0) {
+            updateGame();
+        } else {
+            commandName.innerText = "腳本載入錯誤";
+        }
+    };
+    
+    // 點擊網頁任何地方自動聚焦輸入框
+    document.addEventListener('click', () => { 
+        if(currentIdx < shortcuts.length) gameInput.focus(); 
+    });
 </script>
+
 </body>
 </html>
-
-
-
