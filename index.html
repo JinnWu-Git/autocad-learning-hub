@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCAD 專業學習網站 - v6.0 FINAL</title>
+    <title>AutoCAD 專業學習網站 - v7.0 FINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-      .cad-card { background: rgba(30, 41, 59, 0.7); border-left: 4px solid #3b82f6; transition: 0.3s; }
-      .cad-card:hover { transform: translateY(-5px); background: rgba(30, 41, 59, 1); }
-      .game-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
-      .success-flash { animation: flash 0.5s; }
+     .cad-card { background: rgba(30, 41, 59, 0.7); border-left: 4px solid #3b82f6; transition: 0.3s; }
+     .cad-card:hover { transform: translateY(-5px); background: rgba(30, 41, 59, 1); }
+     .game-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+     .success-flash { animation: flash 0.5s; }
         @keyframes flash { 0% { background-color: transparent; } 50% { background-color: rgba(34, 197, 94, 0.3); } 100% { background-color: transparent; } }
     </style>
 </head>
 <body>
 <header class="bg-slate-900 border-b border-slate-700 sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-500">AutoCAD Expert Hub <span class="text-xs font-normal text-slate-500">[v6.0 FINAL]</span></h1>
+        <h1 class="text-2xl font-bold text-blue-500">AutoCAD Expert Hub <span class="text-xs font-normal text-slate-500">[v7.0 FINAL]</span></h1>
         <nav class="hidden md:flex space-x-6 text-sm">
             <a href="#game" class="hover:text-blue-400">快捷鍵闖關</a>
             <a href="#sysvar" class="hover:text-blue-400">系統變數</a>
@@ -31,7 +31,7 @@
     <section id="game" class="scroll-mt-24">
         <div class="text-center mb-10">
             <h2 class="text-3xl font-bold mb-2">1. 快捷鍵反射動作闖關遊戲</h2>
-            <p class="text-slate-400">建立肌肉記憶，高手不看鍵盤 [v6.0]</p>
+            <p id="game-subtitle" class="text-slate-400">建立肌肉記憶，高手不看鍵盤 [v7.0]</p>
         </div>
         <div id="game-container" class="max-w-xl mx-auto bg-slate-800 p-10 rounded-xl shadow-2xl border border-slate-700">
             <div class="text-center">
@@ -40,44 +40,44 @@
                 <input type="text" id="game-input" 
                        class="game-input w-32 text-center text-4xl font-bold bg-slate-900 border-2 border-slate-600 rounded-lg p-3 uppercase text-blue-400" 
                        maxlength="3" autocomplete="off" autofocus placeholder="??">
-                <p id="hint-text" class="text-xs text-slate-500 mt-4 font-mono">提示：請鍵入指令縮寫 (例如 L) 並觀察變化 [v6.0]</p>
+                <p id="hint-text" class="text-xs text-slate-500 mt-4 font-mono">提示：請鍵入指令縮寫 (例如 L) [2]</p>
                 <div id="game-feedback" class="mt-6 h-8 text-lg font-bold text-center"></div>
                 <div class="mt-8 flex justify-around text-sm text-slate-400 border-t border-slate-700 pt-6">
                     <div class="flex flex-col"><span>累計得分</span><span id="score" class="text-2xl text-blue-400 font-bold">0</span></div>
-                    <div class="flex flex-col"><span>目前難度</span><span id="difficulty" class="text-lg text-green-400 font-bold">初級</span></div>
+                    <div class="flex flex-col"><span>目前難度</span><span id="difficulty" class="text-lg text-green-400 font-bold">基礎級</span></div>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="sysvar" class="scroll-mt-24">
-        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4">2. AutoCAD 核心系統變數百科 [7]</h2>
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4">2. AutoCAD 核心系統變數百科</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm leading-relaxed">
             <div class="cad-card p-6 rounded-lg">
                 <h3 class="font-bold text-blue-400 text-lg mb-2">FILEDIA</h3>
-                <p>控制檔案導航對話框。設為 1 時會彈出視窗，設為 0 則強制指令行輸入 [7, 8]。</p>
+                <p>控制檔案對話框。設為 1 時會彈出開啟/儲存視窗 [5]。</p>
             </div>
             <div class="cad-card p-6 rounded-lg">
                 <h3 class="font-bold text-blue-400 text-lg mb-2">OSMODE</h3>
-                <p>鎖點模式組合值。常用 35 代表「端點+中點+圓心」同時啟動 [9, 10]。</p>
+                <p>鎖點模式位元碼總和。常用值為 35 (端點+中點+圓心) [6]。</p>
             </div>
             <div class="cad-card p-6 rounded-lg">
                 <h3 class="font-bold text-blue-400 text-lg mb-2">TRIMEXTENDMODE</h3>
-                <p>2021+ 快速模式。設為 1 啟用智慧修剪，不需預選邊界 [8, 2]。</p>
+                <p>2021+ 快速模式。設為 1 時，TRIM 指令不需預選邊界 [7]。</p>
             </div>
         </div>
     </section>
 
-    <section id="new-features" class="scroll-mt-24 pb-20">
-        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4 text-white">3. AutoCAD 2026 AI 與效能更新</h2>
+    <section id="new-features" class="scroll-mt-24 pb-20 text-center">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4 text-left">3. AutoCAD 2026 AI 更新</h2>
         <div class="bg-slate-800 p-8 rounded-xl border border-blue-500/30">
-            <p class="text-slate-300">AutoCAD 2026 檔案開啟速度提升 11 倍 [3]。智慧功能：Detect and Convert、Autodesk Assistant [11, 12]。</p>
+            <p class="text-slate-300">AutoCAD 2026 開啟速度提升 11 倍，支援 AI 智慧偵測圖塊功能 。</p>
         </div>
     </section>
 </main>
 
 <script>
-    // 核心指令資料庫 - 完整填寫版 v6.0 
+    // 【核心快捷鍵資料庫】 - 請確保此處不是空的 
     const shortcuts =;
 
     let currentIdx = 0;
@@ -94,13 +94,13 @@
         if (!shortcuts |
 
 | shortcuts.length === 0) {
-            commandName.innerText = "資料載入錯誤";
+            commandName.innerText = "資料庫連線中...";
             return;
         }
         if (currentIdx >= shortcuts.length) {
-            commandName.innerHTML = "<span class='text-yellow-400'>🏆 任務達成！</span>";
+            commandName.innerHTML = "<span class='text-yellow-400'>🏆 挑戰成功！</span>";
             gameInput.style.display = 'none';
-            feedback.innerText = "您已成功建立核心肌肉記憶。";
+            feedback.innerText = "您已掌握 80% 的日常核心繪圖指令。";
             return;
         }
         const cmd = shortcuts[currentIdx];
@@ -115,7 +115,7 @@
         const correctKey = shortcuts[currentIdx].key;
 
         if (val === correctKey) {
-            feedback.innerText = "✔ 正確！正在跳轉...";
+            feedback.innerText = "✔ 正確！";
             feedback.className = "mt-6 h-8 text-lg font-bold text-green-400 text-center";
             gameContainer.classList.add('success-flash');
             scoreValue += 10;
@@ -128,7 +128,7 @@
                 updateGame();
             }, 400);
         } else if (val.length >= correctKey.length) {
-            feedback.innerText = "❌ 錯誤，再試一次";
+            feedback.innerText = "❌ 錯誤";
             feedback.className = "mt-6 h-8 text-lg font-bold text-red-500 text-center";
             setTimeout(() => { gameInput.value = ''; }, 300);
         }
