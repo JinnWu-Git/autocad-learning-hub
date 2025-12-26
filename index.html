@@ -2,91 +2,36 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCAD 專業學習網站 - v8.0 [v8.0]</title>
+    <title>AutoCAD 專業學習網站 - v10.0 FINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-       .cad-card { background: rgba(30, 41, 59, 0.7); border-left: 4px solid #3b82f6; transition: 0.3s; }
-       .game-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 25px rgba(59, 130, 246, 0.7); }
-       .success-flash { animation: flash 0.5s; }
-        @keyframes flash { 0% { background-color: transparent; } 50% { background-color: rgba(34, 197, 94, 0.4); } 100% { background-color: transparent; } }
+        body { background-color: #0f172a; color: #e2e8f0; font-family: sans-serif; }
+      .success-flash { animation: flash 0.5s; }
+        @keyframes flash { 0% { background-color: transparent; } 50% { background-color: rgba(34, 197, 94, 0.3); } 100% { background-color: transparent; } }
     </style>
 </head>
 <body>
-<header class="bg-slate-900 border-b border-slate-700 sticky top-0 z-50">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-500">AutoCAD Expert Hub <span class="text-xs font-normal text-slate-500">[v8.0 最終修復]</span></h1>
-        <nav class="hidden md:flex space-x-6 text-sm">
-            <a href="#game" class="hover:text-blue-400">快捷鍵闖關</a>
-            <a href="#sysvar" class="hover:text-blue-400">系統變數</a>
-            <a href="#new-features" class="hover:text-blue-400">2026最新AI</a>
-        </nav>
+    <div class="container mx-auto px-6 py-12 text-center">
+        <h1 class="text-3xl font-bold text-blue-500 mb-8">AutoCAD Expert Hub <span class="text-sm">[v10.0]</span></h1>
+        
+        <div id="game-container" class="max-w-xl mx-auto bg-slate-800 p-10 rounded-2xl border border-slate-700 shadow-2xl">
+            <div class="text-xs text-blue-400 mb-2 uppercase font-bold tracking-widest">目前挑戰目標</div>
+            <div id="command-name" class="text-5xl font-black mb-8 text-white h-16 flex items-center justify-center">載入中...</div>
+            
+            <input type="text" id="game-input" class="w-32 text-center text-4xl font-bold bg-slate-900 border-2 border-slate-600 rounded-lg p-3 uppercase text-blue-400 focus:outline-none focus:border-blue-500" maxlength="3" autocomplete="off" autofocus>
+            
+            <p class="text-xs text-slate-500 mt-6 font-mono">提示：請鍵入指令縮寫 (例如：L) [v10.0]</p>
+            <div id="game-feedback" class="mt-4 h-6 text-green-400 font-bold"></div>
+            
+            <div class="mt-10 flex justify-around text-xs text-slate-400 border-t border-slate-700 pt-8">
+                <div>得分: <span id="score" class="text-xl text-blue-400 font-bold">0</span></div>
+                <div>目前等級: <span class="text-xl text-green-400 font-bold">初級</span></div>
+            </div>
+        </div>
     </div>
-</header>
-
-<main class="container mx-auto px-6 py-12 space-y-20">
-    <section id="game" class="scroll-mt-24">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold mb-2">1. 快捷鍵反射動作闖關遊戲</h2>
-            <p class="text-slate-400">建立肌肉記憶，目標是 11 倍繪圖效能！ [v8.0]</p>
-        </div>
-        <div id="game-container" class="max-w-xl mx-auto bg-slate-800 p-10 rounded-xl shadow-2xl border border-slate-700">
-            <div class="text-center">
-                <div class="text-sm text-blue-400 mb-2 uppercase tracking-widest font-bold">挑戰目標指令</div>
-                <div id="command-name" class="text-5xl font-black mb-8 text-white h-16 flex items-center justify-center">載入中...</div>
-                <input type="text" id="game-input" 
-                       class="game-input w-36 text-center text-5xl font-bold bg-slate-900 border-2 border-slate-600 rounded-lg p-4 uppercase text-blue-400" 
-                       maxlength="3" autocomplete="off" autofocus placeholder="??">
-                <p id="hint-text" class="text-xs text-slate-500 mt-6 font-mono">提示：請輸入指令縮寫 (例如：L) 並看畫面變化 [v8.0]</p>
-                <div id="game-feedback" class="mt-6 h-8 text-xl font-bold text-center"></div>
-                <div class="mt-8 flex justify-around text-sm text-slate-400 border-t border-slate-700 pt-8">
-                    <div class="flex flex-col text-center"><span>累計得分</span><span id="score" class="text-3xl text-blue-400 font-bold">0</span></div>
-                    <div class="flex flex-col text-center"><span>難度等級</span><span id="difficulty" class="text-xl text-green-400 font-bold">初級</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="sysvar" class="scroll-mt-24">
-        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4 text-white">2. 核心系統變數百科</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-            <div class="cad-card p-6 rounded-lg">
-                <h3 class="font-bold text-blue-400 text-lg mb-2">FILEDIA</h3>
-                <p>控制導航對話框。若設為 0，開啟檔案時將不會跳出視窗，新手必學！ [2]</p>
-            </div>
-            <div class="cad-card p-6 rounded-lg">
-                <h3 class="font-bold text-blue-400 text-lg mb-2">OSMODE</h3>
-                <p>物件鎖點模式。常用值 35 可同時開啟端點、中點與圓心鎖點 [3, 4]。</p>
-            </div>
-            <div class="cad-card p-6 rounded-lg">
-                <h3 class="font-bold text-blue-400 text-lg mb-2">TRIMEXTENDMODE</h3>
-                <p>2021+ 版快速模式。設為 1 時 TRIM 指令不需預選邊界即可剪裁 [5]。</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="new-features" class="scroll-mt-24 pb-20">
-        <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-4 text-white">3. AutoCAD 2026 AI 與效能革命</h2>
-        <div class="bg-slate-800 p-8 rounded-xl border border-blue-500/30">
-            <p class="text-slate-300 leading-relaxed mb-6">
-                AutoCAD 2026 實現了檔案開啟速度提升 **11 倍** 的神速性能 [6]。
-            </p>
-            <ul class="text-sm space-y-4 text-slate-300">
-                <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> **Detect and Convert (AI)**：自動偵測重複幾何體並一鍵轉換為圖塊 [7, 6]。</li>
-                <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> **Autodesk Assistant**：內建生成式 AI，口語問答即得答案 。</li>
-            </ul>
-        </div>
-    </section>
-</main>
-
-<footer class="bg-slate-900 border-t border-slate-800 py-10 text-center text-slate-500 text-xs">
-    <p>© 2025 AutoCAD 智慧學習門戶 | 核心內容基於 v8.0 修復版 </p>
-</footer>
 
 <script>
-    // 【指令資料庫】 - 這次我確認過，裡面真的有內容！ 
+    /* 【關鍵資料庫】 - 請確認此處包含 L, C, PL 等資料 */
     const shortcuts =;
 
     let currentIdx = 0;
@@ -94,58 +39,32 @@
 
     const gameInput = document.getElementById('game-input');
     const commandName = document.getElementById('command-name');
-    const feedback = document.getElementById('game-feedback');
     const scoreDisplay = document.getElementById('score');
-    const difficultyDisplay = document.getElementById('difficulty');
-    const gameContainer = document.getElementById('game-container');
 
     function updateGame() {
         if (currentIdx >= shortcuts.length) {
-            commandName.innerHTML = "<span class='text-yellow-400'>🏆 達成大師等級！</span>";
+            commandName.innerHTML = "🏆 任務達成！";
             gameInput.style.display = 'none';
-            feedback.innerText = "恭喜完成 15 組核心快捷鍵練習 [v8.0]";
             return;
         }
-        const cmd = shortcuts[currentIdx];
-        commandName.innerText = cmd.name;
-        difficultyDisplay.innerText = cmd.level;
+        // 就是這一行負責改變顯示文字 
+        commandName.innerText = shortcuts[currentIdx].name;
         gameInput.value = '';
         gameInput.focus();
     }
 
     gameInput.addEventListener('input', (e) => {
         const val = e.target.value.toUpperCase().trim();
-        const correctKey = shortcuts[currentIdx].key;
-
-        if (val === correctKey) {
-            feedback.innerText = "✔ 正確！執行 " + shortcuts[currentIdx].name;
-            feedback.className = "mt-6 h-8 text-xl font-bold text-green-400 text-center";
-            gameContainer.classList.add('success-flash');
+        if (val === shortcuts[currentIdx].key) {
             scoreValue += 10;
             scoreDisplay.innerText = scoreValue;
-            
-            setTimeout(() => {
-                gameContainer.classList.remove('success-flash');
-                feedback.innerText = "";
-                currentIdx++;
-                updateGame();
-            }, 500);
-        } else if (val.length >= correctKey.length) {
-            feedback.innerText = "❌ 錯誤，請再試一次";
-            feedback.className = "mt-6 h-8 text-xl font-bold text-red-500 text-center";
-            setTimeout(() => { gameInput.value = ''; }, 400);
+            currentIdx++;
+            updateGame();
         }
     });
 
-    window.onload = function() {
-        if (shortcuts.length > 0) {
-            updateGame();
-        } else {
-            commandName.innerText = "腳本載入錯誤";
-        }
-    };
-    
-    document.addEventListener('click', () => { if(currentIdx < shortcuts.length) gameInput.focus(); });
+    window.onload = updateGame;
+    document.addEventListener('click', () => gameInput.focus());
 </script>
 </body>
 </html>
